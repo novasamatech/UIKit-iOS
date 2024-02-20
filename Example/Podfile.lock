@@ -1,0 +1,47 @@
+PODS:
+  - UIKit-iOS (1.0.0):
+    - UIKit-iOS/AdaptiveDesign (= 1.0.0)
+    - UIKit-iOS/Animator (= 1.0.0)
+    - UIKit-iOS/Camera (= 1.0.0)
+    - UIKit-iOS/Controls (= 1.0.0)
+    - UIKit-iOS/DetailsView (= 1.0.0)
+    - UIKit-iOS/EmptyState (= 1.0.0)
+    - UIKit-iOS/Helpers (= 1.0.0)
+    - UIKit-iOS/LoadingView (= 1.0.0)
+    - UIKit-iOS/ModalPresentation (= 1.0.0)
+    - UIKit-iOS/PageLoader (= 1.0.0)
+    - UIKit-iOS/PinView (= 1.0.0)
+    - UIKit-iOS/Skrull (= 1.0.0)
+  - UIKit-iOS/AdaptiveDesign (1.0.0)
+  - UIKit-iOS/Animator (1.0.0)
+  - UIKit-iOS/Camera (1.0.0)
+  - UIKit-iOS/Controls (1.0.0):
+    - UIKit-iOS/Animator
+  - UIKit-iOS/DetailsView (1.0.0):
+    - UIKit-iOS/Controls
+  - UIKit-iOS/EmptyState (1.0.0):
+    - UIKit-iOS/Animator
+  - UIKit-iOS/Helpers (1.0.0)
+  - UIKit-iOS/LoadingView (1.0.0):
+    - UIKit-iOS/Controls
+  - UIKit-iOS/ModalPresentation (1.0.0):
+    - UIKit-iOS/Animator
+    - UIKit-iOS/Controls
+  - UIKit-iOS/PageLoader (1.0.0)
+  - UIKit-iOS/PinView (1.0.0):
+    - UIKit-iOS/Controls
+  - UIKit-iOS/Skrull (1.0.0)
+
+DEPENDENCIES:
+  - UIKit-iOS (from `../`)
+
+EXTERNAL SOURCES:
+  UIKit-iOS:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  UIKit-iOS: ab2d0a96724cfaa6d3e5687b0feed290c82bf5f7
+
+PODFILE CHECKSUM: a10e8ebb9fca6918a3432ab6df8ca027ad338bac
+
+COCOAPODS: 1.15.2
