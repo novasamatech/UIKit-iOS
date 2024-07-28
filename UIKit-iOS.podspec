@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'UIKit-iOS'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'UI Library for design and layout process simplification.'
 
   s.description      = 'Library contains views and controls that simplifies design and layout implementation manually in code or utilizing interface build.'
