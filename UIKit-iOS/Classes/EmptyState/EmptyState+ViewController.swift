@@ -9,7 +9,7 @@ public extension EmptyStateViewOwnerProtocol where Self: UIViewController {
 
     private var emptyStateView: UIView? {
         get {
-            withUnsafePointer(to: EmptyStateConstants.viewKey) {
+            withUnsafePointer(to: &EmptyStateConstants.viewKey) {
                 return objc_getAssociatedObject(
                     self,
                     $0
@@ -18,7 +18,7 @@ public extension EmptyStateViewOwnerProtocol where Self: UIViewController {
         }
 
         set {
-            withUnsafePointer(to: EmptyStateConstants.viewKey) {
+            withUnsafePointer(to: &EmptyStateConstants.viewKey) {
                 objc_setAssociatedObject(
                     self,
                     $0,
@@ -31,7 +31,7 @@ public extension EmptyStateViewOwnerProtocol where Self: UIViewController {
 
     private var constraints: [NSLayoutConstraint] {
         get {
-            withUnsafePointer(to: EmptyStateConstants.constraintsKey) {
+            withUnsafePointer(to: &EmptyStateConstants.constraintsKey) {
                 let constraints = objc_getAssociatedObject(
                     self,
                     $0
@@ -42,7 +42,7 @@ public extension EmptyStateViewOwnerProtocol where Self: UIViewController {
         }
 
         set {
-            withUnsafePointer(to: EmptyStateConstants.constraintsKey) {
+            withUnsafePointer(to: &EmptyStateConstants.constraintsKey) {
                 objc_setAssociatedObject(
                     self,
                     $0,

@@ -13,7 +13,7 @@ public extension UIViewController {
         set {
             transitioningDelegate = newValue
 
-            withUnsafePointer(to: Constants.factoryKey) {
+            withUnsafePointer(to: &Constants.factoryKey) {
                 objc_setAssociatedObject(
                     self,
                     $0,
