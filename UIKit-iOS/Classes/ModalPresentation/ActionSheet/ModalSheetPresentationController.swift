@@ -124,40 +124,79 @@ class ModalSheetPresentationController: UIPresentationController {
         animateBackgroundAlpha(fromValue: 1.0, toValue: 0.0)
     }
 
-    override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView = containerView else {
-            return .zero
+    public override var frameOfPresentedViewInContainerView: CGRect {
+        guard let containerView = containerView else { return .zero }
+                        
+        var frame = containerView.bounds
+        
+        if configuration.style.autoSizing {
+            let targetSize = CGSize(
+                width: containerView.bounds.width,
+                height: UIView.layoutFittingCompressedSize.height
+            )
+
+            let fittingSize = presentedViewController.view.systemLayoutSizeFitting(
+                targetSize,
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow
+            )
+
+            let (_, bottomOffset, maximumHeight) = calculateLayoutParameters(
+                containerView: containerView,
+                extendUnderSafeArea: configuration.extendUnderSafeArea
+            )
+
+            let contentHeight = max(
+                fittingSize.height,
+                presentedViewController.preferredContentSize.height
+            )
+            frame.size.height = min(contentHeight + bottomOffset, maximumHeight)
+
+        } else {
+            let (layoutFrame, bottomOffset, maximumHeight) = calculateLayoutParameters(
+                containerView: containerView,
+                extendUnderSafeArea: configuration.extendUnderSafeArea
+            )
+
+            let preferredSize = presentedViewController.preferredContentSize
+            let layoutWidth = preferredSize.width > 0.0 ? preferredSize.width : layoutFrame.width
+            let layoutHeight = preferredSize.height > 0.0
+                ? preferredSize.height + bottomOffset
+                : layoutFrame.height
+            
+            frame.size.height = min(layoutHeight, maximumHeight)
+            frame.size.width = layoutWidth
         }
 
+        // Ensure we don't exceed the container height
+        frame.size.height = min(frame.size.height, containerView.bounds.height * 0.95)
+        frame.origin.y = containerView.bounds.height - frame.size.height
+        
+        return frame
+    }
+    
+    private func calculateLayoutParameters(
+        containerView: UIView,
+        extendUnderSafeArea: Bool
+    ) -> (layoutFrame: CGRect, bottomOffset: CGFloat, maximumHeight: CGFloat) {
         let layoutFrame: CGRect
         let bottomOffset: CGFloat
-        var maximumHeight = containerView.frame.size.height
-        if #available(iOS 11.0, *) {
-            if configuration.extendUnderSafeArea {
-                layoutFrame = containerView.bounds
-                bottomOffset = containerView.safeAreaInsets.bottom
-                maximumHeight -= containerView.safeAreaInsets.top
-            } else {
-                layoutFrame = containerView.safeAreaLayoutGuide.layoutFrame
-                bottomOffset = 0.0
-            }
-        } else {
-            layoutFrame = containerView.bounds
-            bottomOffset = 0.0
-        }
-        maximumHeight -= bottomOffset
+        let maximumHeight: CGFloat
         
-        let preferredSize = presentedViewController.preferredContentSize
-        let layoutWidth = preferredSize.width > 0.0 ? preferredSize.width : layoutFrame.width
-        let layoutHeight = preferredSize.height > 0.0 ? preferredSize.height + bottomOffset : layoutFrame.height
-        let height = min(layoutHeight, maximumHeight)
-
-        return CGRect(x: layoutFrame.minX,
-                      y: layoutFrame.maxY - height,
-                      width: layoutWidth,
-                      height: height)
+        if extendUnderSafeArea {
+            layoutFrame = containerView.bounds
+            bottomOffset = containerView.safeAreaInsets.bottom
+            maximumHeight = containerView.frame.size.height - containerView.safeAreaInsets.top
+        } else {
+            layoutFrame = containerView.safeAreaLayoutGuide.layoutFrame
+            bottomOffset = 0.0
+            maximumHeight = containerView.frame.size.height
+        }
+        
+        return (layoutFrame, bottomOffset, maximumHeight - bottomOffset)
     }
 
+    
     // MARK: Animation
 
     func animateBackgroundAlpha(fromValue: CGFloat, toValue: CGFloat) {
