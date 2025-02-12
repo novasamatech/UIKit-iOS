@@ -33,7 +33,7 @@ public struct ModalSheetPresentationConfiguration {
     }
 
     public init(shadowOpacity: CGFloat) {
-        let style = ModalSheetPresentationStyle(autoSizing: false, backdropColor: UIColor.black.withAlphaComponent(shadowOpacity))
+        let style = ModalSheetPresentationStyle(sizing: .manual, backdropColor: UIColor.black.withAlphaComponent(shadowOpacity))
 
         self.init(style: style)
     }

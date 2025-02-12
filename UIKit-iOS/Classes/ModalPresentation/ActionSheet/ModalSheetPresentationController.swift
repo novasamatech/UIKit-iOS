@@ -128,31 +128,8 @@ class ModalSheetPresentationController: UIPresentationController {
         guard let containerView = containerView else { return .zero }
                         
         var frame = containerView.bounds
-        
-        if configuration.style.autoSizing {
-            let targetSize = CGSize(
-                width: containerView.bounds.width,
-                height: UIView.layoutFittingCompressedSize.height
-            )
-
-            let fittingSize = presentedViewController.view.systemLayoutSizeFitting(
-                targetSize,
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .defaultLow
-            )
-
-            let (_, bottomOffset, maximumHeight) = calculateLayoutParameters(
-                containerView: containerView,
-                extendUnderSafeArea: configuration.extendUnderSafeArea
-            )
-
-            let contentHeight = max(
-                fittingSize.height,
-                presentedViewController.preferredContentSize.height
-            )
-            frame.size.height = min(contentHeight + bottomOffset, maximumHeight)
-
-        } else {
+        switch configuration.style.sizing {
+        case .manual:
             let (layoutFrame, bottomOffset, maximumHeight) = calculateLayoutParameters(
                 containerView: containerView,
                 extendUnderSafeArea: configuration.extendUnderSafeArea
@@ -166,12 +143,33 @@ class ModalSheetPresentationController: UIPresentationController {
             
             frame.size.height = min(layoutHeight, maximumHeight)
             frame.size.width = layoutWidth
+            frame.origin.y = layoutFrame.maxY - frame.size.height
+        case .auto(let maxHeight):
+            let targetSize = CGSize(
+                width: containerView.bounds.width,
+                height: UIView.layoutFittingCompressedSize.height
+            )
+
+            let fittingSize = presentedViewController.view.systemLayoutSizeFitting(
+                targetSize,
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow
+            )
+
+            let (layoutFrame, bottomOffset, maximumHeight) = calculateLayoutParameters(
+                containerView: containerView,
+                extendUnderSafeArea: configuration.extendUnderSafeArea
+            )
+
+            let maxHeightInContainer = min(maxHeight, 1.0) * maximumHeight
+            let contentHeight = max(
+                fittingSize.height,
+                presentedViewController.preferredContentSize.height
+            )
+            frame.size.height = min(contentHeight + bottomOffset, maxHeightInContainer)
+            frame.origin.y = layoutFrame.maxY - frame.size.height
         }
 
-        // Ensure we don't exceed the container height
-        frame.size.height = min(frame.size.height, containerView.bounds.height * 0.95)
-        frame.origin.y = containerView.bounds.height - frame.size.height
-        
         return frame
     }
     
@@ -186,11 +184,11 @@ class ModalSheetPresentationController: UIPresentationController {
         if extendUnderSafeArea {
             layoutFrame = containerView.bounds
             bottomOffset = containerView.safeAreaInsets.bottom
-            maximumHeight = containerView.frame.size.height - containerView.safeAreaInsets.top
+            maximumHeight = layoutFrame.size.height - containerView.safeAreaInsets.top
         } else {
             layoutFrame = containerView.safeAreaLayoutGuide.layoutFrame
             bottomOffset = 0.0
-            maximumHeight = containerView.frame.size.height
+            maximumHeight = layoutFrame.size.height
         }
         
         return (layoutFrame, bottomOffset, maximumHeight - bottomOffset)
