@@ -24,10 +24,22 @@ public struct ModalSheetPresentationHeaderStyle {
 }
 
 public struct ModalSheetPresentationStyle {
+    public enum Sizing {
+        /// Use controller.preferredContentSize
+        case manual
+        /// **maxHeight** in precentage  0...1
+        case auto(maxHeight: CGFloat)
+    }
+    public let sizing: Sizing
     public let backdropColor: UIColor
     public let headerStyle: ModalSheetPresentationHeaderStyle?
 
-    public init(backdropColor: UIColor, headerStyle: ModalSheetPresentationHeaderStyle? = nil) {
+    public init(
+        sizing: Sizing,
+        backdropColor: UIColor,
+        headerStyle: ModalSheetPresentationHeaderStyle? = nil
+    ) {
+        self.sizing = sizing
         self.backdropColor = backdropColor
         self.headerStyle = headerStyle
     }
@@ -35,6 +47,10 @@ public struct ModalSheetPresentationStyle {
 
 public extension ModalSheetPresentationStyle {
     static var defaultStyle: ModalSheetPresentationStyle {
-        ModalSheetPresentationStyle(backdropColor: UIColor.black.withAlphaComponent(0.5), headerStyle: nil)
+        ModalSheetPresentationStyle(
+            sizing: .manual,
+            backdropColor: UIColor.black.withAlphaComponent(0.5),
+            headerStyle: nil
+        )
     }
 }
