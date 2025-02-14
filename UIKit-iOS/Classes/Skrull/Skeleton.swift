@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct Skeleton {
     var position: CGPoint

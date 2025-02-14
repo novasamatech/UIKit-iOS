@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public final class SingleSkeleton {
     let position: CGPoint

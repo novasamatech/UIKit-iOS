@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct ModalAlertPresentationStyle {
     public let backdropColor: UIColor

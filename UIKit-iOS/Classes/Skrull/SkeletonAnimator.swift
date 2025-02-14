@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol SkeletonAnimatorProtocol {
     func startAnimation(on layer: CAGradientLayer)

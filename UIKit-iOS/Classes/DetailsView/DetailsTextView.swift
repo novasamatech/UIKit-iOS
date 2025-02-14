@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol DetailsTextViewDelegate: AnyObject {
     func didChangeExpandingState(in detailsView: DetailsTextView)

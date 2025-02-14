@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public class ModalAlertPresentationFactory: NSObject {
     let configuration: ModalAlertPresentationConfiguration

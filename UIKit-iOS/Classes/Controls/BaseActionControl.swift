@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol ActionControlIndicatorProtocol {
     var isActivated: Bool { get }
