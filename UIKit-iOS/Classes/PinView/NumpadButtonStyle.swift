@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /**
  *  Struct is designed to represent numpad button style

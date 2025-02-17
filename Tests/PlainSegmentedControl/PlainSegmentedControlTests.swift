@@ -1,5 +1,5 @@
 import XCTest
-import UIKit_iOS
+@testable import UIKit_iOS
 
 class PlainSegmentedControlTests: XCTestCase {
     func testSelectedIndexIsNotChangedIfNewTitlesCountTheSame() {

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 @IBDesignable
 open class PlainSegmentedControl: UIControl {

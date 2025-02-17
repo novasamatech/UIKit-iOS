@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public final class FadeAnimator: ViewAnimatorProtocol {
     public private(set) var fromValue: CGFloat

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol ListViewLayoutStrategyProtocol: AnyObject {
     func layout(views: [UIView], in rect: CGRect)

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public final class MultilineSkeleton {
     let startLinePosition: CGPoint

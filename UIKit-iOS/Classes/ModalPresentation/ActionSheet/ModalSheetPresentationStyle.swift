@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct ModalSheetPresentationHeaderStyle {
     public let preferredHeight: CGFloat

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 private struct Constants {
     static var factoryKey: String = "io.novasama.ui.modal.presentation.factory"

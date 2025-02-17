@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct ModalSheetPresentationConfiguration {
     public let contentAppearanceAnimator: BlockViewAnimatorProtocol
