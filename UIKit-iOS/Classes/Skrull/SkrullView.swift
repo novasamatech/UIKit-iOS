@@ -3,8 +3,6 @@ import UIKit
 
 final class SkrullView: UIView {
     private struct Constants {
-        static let gradientStartPoint: CGPoint = CGPoint(x: 0.0, y: 0.5)
-        static let gradientEndPoint: CGPoint = CGPoint(x: 1.0, y: 0.5)
         static let animationStartPositions: [NSNumber] = [-1.0, -0.55, -0.45, 0.0]
         static let animationEndPositions: [NSNumber] = [1.0, 1.45, 1.55, 2.0]
         static let animationDuration: TimeInterval = 1.0
@@ -150,9 +148,9 @@ final class SkrullView: UIView {
     private func configureLayerStyle(for layer: CAGradientLayer, skeleton: Skeleton) {
         let startColor = skeleton.startColor?.cgColor ?? fillSkeletonStartColor.cgColor
         let endColor = skeleton.endColor?.cgColor ?? fillSkeletonEndColor.cgColor
-
-        layer.startPoint = Constants.gradientStartPoint
-        layer.endPoint = Constants.gradientEndPoint
+        let gradientPoints = skeleton.direction.gradientPoints
+        layer.startPoint = gradientPoints.start
+        layer.endPoint = gradientPoints.end
         layer.colors = [startColor, endColor, startColor]
         layer.locations = Constants.animationStartPositions
     }
@@ -241,5 +239,22 @@ extension SkrullView: Skrullable {
         isAnimating = false
 
         layers.forEach { skeletonAnimator.stopAnimation(on: $0) }
+    }
+}
+
+private extension Skeleton.Direction {
+    var gradientPoints: (start: CGPoint, end: CGPoint) {
+        switch self {
+        case .horizontal:
+            return (CGPoint(x: 0.0, y: 0.5), CGPoint(x: 1.0, y: 0.5))
+        case .vertical:
+            return (CGPoint(x: 0.5, y: 0.0), CGPoint(x: 0.5, y: 1.0))
+        case .diagonalLeftToRight:
+            return (CGPoint(x: 0.0, y: 0.0), CGPoint(x: 1.0, y: 1.0))
+        case .diagonalRightToLeft:
+            return (CGPoint(x: 1.0, y: 0.0), CGPoint(x: 0.0, y: 1.0))
+        case .custom(let start, let end):
+            return (start, end)
+        }
     }
 }

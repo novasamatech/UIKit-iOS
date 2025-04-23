@@ -70,7 +70,8 @@ extension MultilineSkeleton: Skeletonable {
                             cornerRadii: cornerRadii,
                             cornerRoundingMode: cornerRoundingMode,
                             startColor: startColor,
-                            endColor: endColor)
+                            endColor: endColor,
+                            direction: .horizontal)
         }
     }
 }
