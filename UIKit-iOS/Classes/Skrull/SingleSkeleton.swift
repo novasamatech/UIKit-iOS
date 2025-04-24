@@ -11,6 +11,8 @@ public final class SingleSkeleton {
     private(set) var startColor: UIColor?
     private(set) var endColor: UIColor?
 
+    private(set) var direction: Skeleton.Direction = .horizontal
+    
     public init(position: CGPoint, size: CGSize) {
         self.position = position
         self.size = size
@@ -35,6 +37,12 @@ public final class SingleSkeleton {
 
         return self
     }
+    
+    public func direction(_ direction: Skeleton.Direction) -> Self {
+        self.direction = direction
+        
+        return self
+    }
 }
 
 extension SingleSkeleton: Skeletonable {
@@ -45,7 +53,8 @@ extension SingleSkeleton: Skeletonable {
                      cornerRadii: cornerRadii,
                      cornerRoundingMode: cornerRoundingMode,
                      startColor: startColor,
-                     endColor: endColor)
+                     endColor: endColor,
+                     direction: direction)
         ]
     }
 }
