@@ -135,9 +135,9 @@ class ModalSheetPresentationController: UIPresentationController {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
 
         containerView?.setNeedsLayout()
-        UIView.animate(withDuration: 0.3) {
+        configuration.contentSizeAnimator.animate(block: {
             self.containerView?.layoutIfNeeded()
-        }
+        }, completionBlock: nil)
     }
 
     private func updateHeaderFrame(for frame: CGRect, presentedView: UIView) {

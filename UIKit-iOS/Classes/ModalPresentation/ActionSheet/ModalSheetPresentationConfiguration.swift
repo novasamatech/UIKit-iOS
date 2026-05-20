@@ -4,6 +4,7 @@ import UIKit
 public struct ModalSheetPresentationConfiguration {
     public let contentAppearanceAnimator: BlockViewAnimatorProtocol
     public let contentDissmisalAnimator: BlockViewAnimatorProtocol
+    public let contentSizeAnimator: BlockViewAnimatorProtocol
     public let style: ModalSheetPresentationStyle
 
     public let extendUnderSafeArea: Bool
@@ -13,17 +14,21 @@ public struct ModalSheetPresentationConfiguration {
     public let dismissFinishSpeedFactor: CGFloat
     public let dismissCancelSpeedFactor: CGFloat
 
-    public init(contentAppearanceAnimator: BlockViewAnimatorProtocol = BlockViewAnimator(duration: 0.35, delay: 0.0, options: [.curveLinear]),
-                contentDissmisalAnimator: BlockViewAnimatorProtocol = BlockViewAnimator(duration: 0.35, delay: 0.0, options: [.curveLinear]),
-                style: ModalSheetPresentationStyle = .defaultStyle,
-                extendUnderSafeArea: Bool = false,
-                dismissPercentThreshold: CGFloat = 0.35,
-                dismissVelocityThreshold: CGFloat = 1280,
-                dismissMinimumOffset: CGFloat = 87,
-                dismissFinishSpeedFactor: CGFloat = 0.3,
-                dismissCancelSpeedFactor: CGFloat = 0.3) {
+    public init(
+        contentAppearanceAnimator: BlockViewAnimatorProtocol = BlockViewAnimator(duration: 0.35, delay: 0.0, options: [.curveLinear]),
+        contentDissmisalAnimator: BlockViewAnimatorProtocol = BlockViewAnimator(duration: 0.35, delay: 0.0, options: [.curveLinear]),
+        contentSizeAnimator: BlockViewAnimatorProtocol = BlockViewAnimator(duration: 0.35, delay: 0.0, options: [.curveLinear]),
+        style: ModalSheetPresentationStyle = .defaultStyle,
+        extendUnderSafeArea: Bool = false,
+        dismissPercentThreshold: CGFloat = 0.35,
+        dismissVelocityThreshold: CGFloat = 1280,
+        dismissMinimumOffset: CGFloat = 87,
+        dismissFinishSpeedFactor: CGFloat = 0.3,
+        dismissCancelSpeedFactor: CGFloat = 0.3
+    ) {
         self.contentAppearanceAnimator = contentAppearanceAnimator
         self.contentDissmisalAnimator = contentDissmisalAnimator
+        self.contentSizeAnimator = contentSizeAnimator
         self.style = style
         self.extendUnderSafeArea = extendUnderSafeArea
         self.dismissPercentThreshold = dismissPercentThreshold
