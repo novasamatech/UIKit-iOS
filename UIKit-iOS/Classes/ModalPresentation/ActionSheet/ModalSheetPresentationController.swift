@@ -124,6 +124,33 @@ class ModalSheetPresentationController: UIPresentationController {
         animateBackgroundAlpha(fromValue: 1.0, toValue: 0.0)
     }
 
+    override func containerViewWillLayoutSubviews() {
+        super.containerViewWillLayoutSubviews()
+        presentedView?.frame = frameOfPresentedViewInContainerView
+        guard let presentedView = presentedView else { return }
+        updateHeaderFrame(for: frameOfPresentedViewInContainerView, presentedView: presentedView)
+    }
+
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+
+        containerView?.setNeedsLayout()
+        configuration.contentSizeAnimator.animate(block: {
+            self.containerView?.layoutIfNeeded()
+        }, completionBlock: nil)
+    }
+
+    private func updateHeaderFrame(for frame: CGRect, presentedView: UIView) {
+        guard let headerStyle = configuration.style.headerStyle else { return }
+        let width = containerView?.bounds.width ?? presentedView.bounds.width
+        headerView?.frame = CGRect(
+            x: 0.0,
+            y: frame.origin.y - headerStyle.preferredHeight + 0.5,
+            width: width,
+            height: headerStyle.preferredHeight
+        )
+    }
+
     public override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView else { return .zero }
                         
